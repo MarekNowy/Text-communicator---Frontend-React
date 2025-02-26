@@ -1,0 +1,71 @@
+
+body {
+    background-color: #2B2B2B
+}
+
+label {
+    font-size: 15px;
+    font-weight: bold;
+    color: aqua;
+}
+input {
+ min-width: 200px;
+ display: block;
+ margin: 15px;
+ padding: 5px;
+ background-color: #2B2B2B ;
+ box-shadow: 0px 0px 10px -1px rgba(0,255,255,0.51);
+ -webkit-box-shadow: 0px 0px 10px -1px rgba(0,255,255,0.51);
+ -moz-box-shadow: 0px 0px 10px -1px rgba(0,255,255,0.51);
+ color: #00ffff;
+ border-radius: 5px;
+}
+
+input:focus{
+    box-shadow: 0px 0px 21px -1px rgba(0,255,255,0.51);
+-webkit-box-shadow: 0px 0px 21px -1px rgba(0,255,255,0.51);
+-moz-box-shadow: 0px 0px 21px -1px rgba(0,255,255,0.51);
+}
+input::placeholder{
+	color: darkgray;
+}
+Button {
+    width: 80%;
+	background-color:transparent;
+	border-radius:5px;
+	border:2px solid #00ffff;
+	display:inline-block;
+	cursor:pointer;
+	color:#00ffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:8px 16px;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #00ffff;
+    margin: 10px;
+	transition: border 0.3s ease-in-out;
+	
+    
+}
+Button:hover {
+	background-color:transparent;
+	border: 2px solid #2B2B2B;
+	
+    
+}
+.errMsg{
+ color: red;
+}
+.offScreen{
+visibility: hidden;
+}
+form{
+	background-color: black;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px -1px rgba(0,255,255,0.51);
+	-webkit-box-shadow: 0px 0px 10px -1px rgba(0,255,255,0.51);
+	-moz-box-shadow: 0px 0px 10px -1px rgba(0,255,255,0.51);
+}
+
+        
