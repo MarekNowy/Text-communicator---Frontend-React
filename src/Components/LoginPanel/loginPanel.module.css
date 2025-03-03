@@ -8,7 +8,7 @@ label {
     font-weight: bold;
     color: aqua;
 }
-input {
+form input {
  min-width: 200px;
  display: block;
  margin: 15px;
@@ -21,12 +21,12 @@ input {
  border-radius: 5px;
 }
 
-input:focus{
+form input:focus{
     box-shadow: 0px 0px 21px -1px rgba(0,255,255,0.51);
 -webkit-box-shadow: 0px 0px 21px -1px rgba(0,255,255,0.51);
 -moz-box-shadow: 0px 0px 21px -1px rgba(0,255,255,0.51);
 }
-input::placeholder{
+form input::placeholder{
 	color: darkgray;
 }
 Button {

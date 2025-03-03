@@ -1,9 +1,10 @@
 import styles from './loginPanel.module.css'; 
-import '../css/fontello.css'; 
 import axios from 'axios';  
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPanel() {
+    const navigate =  useNavigate();
 
     const userRef = useRef<HTMLInputElement | null>(null);
     const errRef = useRef<HTMLParagraphElement | null>(null);
@@ -23,6 +24,7 @@ function LoginPanel() {
                 email: email,
                 password: pwd  
             });
+            console.log(response)
             const access_token: string = response?.data.access_token;
             const refresh_token: string = response?.data.refresh_token;
 
@@ -46,60 +48,54 @@ function LoginPanel() {
     useEffect(() => {
         if (userRef.current) userRef.current.focus();
     }, []);
+    
+    useEffect(() => {
+        if(success){
+        navigate("/home")
+        }
+    }, [success])
 
     useEffect(() => {
         setErrMsg('');
     }, [email, pwd]);
 
     return (
-        <>
-            {success ? (
-                <section>
-                    <h1>You are logged in!</h1>
-                    <br/>
+       
+            <section>
+                <p ref={errRef} className={errMsg ? styles.errMsg : styles.offscreen} aria-live="assertive">
+                    {errMsg}
+                </p>
+                <h1>Sign In</h1>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="userEmail">Email</label>
+                    <input 
+                        type="email" 
+                        id="userEmail"
+                        ref={userRef}
+                        autoComplete="off"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        required
+                    />
+                    <label htmlFor="userPassword">Password</label>
+                    <input 
+                        type="password" 
+                        id="userPassword"
+                        autoComplete="off"
+                        onChange={(e) => setPwd(e.target.value)}
+                        value={pwd}
+                        required
+                    />
+                    <button>Sign In</button>
                     <p>
-                        <a href="#">Go to home</a>
+                        Need an Account?<br/>
+                        <span className="line">
+                            <a href="/register">Sign Up</a>    
+                        </span>
                     </p>
-                </section>
-            ) : (
-                <section>
-                    <p ref={errRef} className={errMsg ? styles.errMsg : styles.offscreen} aria-live="assertive">
-                        {errMsg}
-                    </p>
-                    <h1>Sign In</h1>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="userEmail">Email</label>
-                        <input 
-                            type="email" 
-                            id="userEmail"
-                            ref={userRef}
-                            autoComplete="off"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            required
-                        />
-                        <label htmlFor="userPassword">Password</label>
-                        <input 
-                            type="password" 
-                            id="userPassword"
-                            autoComplete="off"
-                            onChange={(e) => setPwd(e.target.value)}
-                            value={pwd}
-                            required
-                        />
-                        <button>Sign In</button>
-                        <p>
-                            Need an Account?<br/>
-                            <span className="line">
-                                <a href="/register">Sign Up</a>    
-                            </span>
-                        </p>
-                    </form>
-                </section>
-            )}
+                </form>
+            </section>
+            );}
         
-        </>
-    );
-}
 
 export default LoginPanel;

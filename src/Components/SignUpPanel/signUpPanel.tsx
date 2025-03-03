@@ -40,6 +40,7 @@ export function SignUpPanel() {
         email: email,
         password: password,
       });
+      console.log(response)
     } catch (err: any) {
       if (!err.response) {
         setErr('No server response');
@@ -63,6 +64,7 @@ export function SignUpPanel() {
    </p>
    <h1>Sign Up</h1>
    <form onSubmit={handleSubmit}>
+  
       <label htmlFor="userNickName">User NickName</label>
    <input
       ref={userRef}
