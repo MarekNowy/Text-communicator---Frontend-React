@@ -9,7 +9,6 @@ const UserInfo = () => {
 
   const [user, setUser] = useState<any>(null);
   const JWT_TOKEN = localStorage.getItem("access_token");
-  console.log(JWT_TOKEN)
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -34,8 +33,9 @@ const UserInfo = () => {
         <img src="/avatar2.jpg" alt="" className={styles.avatar}/>
         <h2>{user?.nickName}</h2>
         <div className={styles.icons}>
-        <i className="icon-user"/>
+        <i className="icon-cog"/>
         <i className="icon-article-alt"/>
+        <i className="icon-login"/>
         </div>
         </div>
 

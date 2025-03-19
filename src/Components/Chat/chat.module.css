@@ -6,7 +6,7 @@
     border: 1px dotted white;
     border-left: none;
     border-top: none;
-    flex-direction: column;    
+    flex-direction: column;   
 }
 
 .avatar {
@@ -32,6 +32,8 @@
     display: flex;
     display: flex;
     flex-direction: column;
+    overflow:scroll;
+    overflow-x:hidden;
 }
 .messages{
     display: flex;
@@ -40,25 +42,32 @@
      
 }
 .send{
+color: black;
+background-color: aqua;
 font-size: 20px;
 display: flex;
 padding-right: 10px;
 padding-left: 10px;
 width: fit-content;
+max-width: 40%;
 border: 1px solid aqua;
 border-radius: 10px;
 align-self: flex-end;
 margin-right: 3px;
+margin-top: 5px;
 }
 .received{
+    margin-top: 5px;
 font-size: 20px;
-border: 1px solid aqua;
+color: black;
+background-color: lightgray;
 display: flex;
 justify-content: flex-start;
 padding-left: 10px;
 padding-right: 10px;
 border-radius: 10px;
 width: fit-content;
+max-width: 40%;
 align-self: flex-start;
 margin-left: 3px;
 }
@@ -90,7 +99,7 @@ textarea:focus {
 width: 50px;
 height: 25px;
 background-color: aqua;
-display: inline-flex;
+display: flex;
 align-items: center;
 justify-content: center;
 outline: none;
@@ -99,4 +108,12 @@ p{
     margin-left: 5px;
     margin-right: 5px;
     font-size: 10px;
+}
+.usernickname{
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.envelope{
+    margin-bottom: 7px;
 }

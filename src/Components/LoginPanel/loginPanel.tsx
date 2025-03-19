@@ -2,6 +2,7 @@ import styles from './loginPanel.module.css';
 import axios from 'axios';  
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createSocket } from '../Context/socket';
 
 function LoginPanel() {
     const navigate =  useNavigate();
@@ -31,14 +32,22 @@ function LoginPanel() {
             localStorage.setItem('access_token', access_token);
             localStorage.setItem('refresh_token', refresh_token);
 
+            createSocket(access_token)
             setSuccess(true);
+            console.log(`sending token ${access_token}`)
+            
+          
+            
         } catch (err: any) {
             if (!err.response) {
                 setErrMsg('No Server Response');
+
             } else if (err.response?.status === 401) {
                 setErrMsg('Invalid Login Data');
+
             } else if (err.response.status === 404) {
                 setErrMsg("Cannot find the user");
+                
             } else {
                 setErrMsg('Login Failed');
             }

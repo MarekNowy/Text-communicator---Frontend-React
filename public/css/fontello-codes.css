@@ -1,6 +1,7 @@
 
-.icon-user:before { content: '\e800'; } /* '' */
-.icon-article-alt:before { content: '\e801'; } /* '' */
-.icon-search:before { content: '\e802'; } /* '' */
-.icon-user-add:before { content: '\e803'; } /* '' */
-.icon-cog:before { content: '\e804'; } /* '' */
+.icon-login:before { content: '\e800'; } /* '' */
+.icon-user:before { content: '\e801'; } /* '' */
+.icon-user-add:before { content: '\e802'; } /* '' */
+.icon-cog:before { content: '\e803'; } /* '' */
+.icon-article-alt:before { content: '\e804'; } /* '' */
+.icon-search:before { content: '\e805'; } /* '' */
