@@ -22,6 +22,7 @@ const Chat = ({ userId }: { userId: any }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        if(!userId){return};
         const response = await axios.get(`http://localhost:3000/messages/interlocutors/${userId}`, {
           headers: {
             Authorization: `Bearer ${JWT_TOKEN}`,

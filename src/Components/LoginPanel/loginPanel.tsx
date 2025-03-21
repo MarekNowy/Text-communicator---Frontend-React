@@ -32,10 +32,8 @@ function LoginPanel() {
             localStorage.setItem('access_token', access_token);
             localStorage.setItem('refresh_token', refresh_token);
 
-            createSocket(access_token)
+            createSocket(access_token);
             setSuccess(true);
-            console.log(`sending token ${access_token}`)
-            
           
             
         } catch (err: any) {

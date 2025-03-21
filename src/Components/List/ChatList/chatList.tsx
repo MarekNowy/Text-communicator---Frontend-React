@@ -1,18 +1,25 @@
 import axios from "axios";
 import styles from "./chatList.module.css";
-import { useState, useEffect} from "react";
+import { useState, useEffect, Children, ReactNode, Dispatch, SetStateAction, useContext} from "react";
 import { getSocket } from "../../Context/socket";
+import { createContext } from "react";
+import UserInfo from "../UserInfo/userInfo";
+import Settings from "../../Settings/settings";
+
 
 interface ChatListProps {
     onUserClick: (userId: string) => void; 
   }
 
+export const ValueContext = createContext<any>("")  
+
 const ChatList = ( {onUserClick}: ChatListProps) => {
+  const [settings, setSettings] = useState<boolean>(false);
   const [users, setUsers] = useState<any>([]);
   const JWT_TOKEN = localStorage.getItem("access_token");
-  const [searchUser, setSearchUser] = useState<any>([])
-  const socket = getSocket()
-
+  const [searchUser, setSearchUser] = useState<any>([]);
+  const socket = getSocket();
+  
   useEffect(() => {
     const fetchPartnerData = async () => {
       try {
@@ -50,25 +57,12 @@ const ChatList = ( {onUserClick}: ChatListProps) => {
    console.log(response.data)
   }
 
-  const handleNewConversation = async (id: string) => {
-    try {
-      const response = await axios.post(`http://localhost:3000/messages`, {
-        "receiverId": id,
-        "content": "Hi :)"
-      }, {
-        headers: {
-          Authorization: `Bearer ${JWT_TOKEN}`,
-        },  
-      })
-      socket.emit('message', {toUserId: id, message: "Hi :)"})
-      
-    } catch (error){
-      console.log(error)
-    }
-  }
+  return (<>
 
-
-  return (
+    <ValueContext.Provider value={[settings, setSettings]}>
+      <UserInfo/>
+    </ValueContext.Provider>
+    
     <div className={styles.chatlist}>
       <div className={styles.search}>
         <div className={styles.searchBar}>
@@ -82,13 +76,14 @@ const ChatList = ( {onUserClick}: ChatListProps) => {
         </div>
       </div>
       
-      {
+      { settings ? (
+        <Settings/>
+      ) :
       searchUser.length > 0 ? ( searchUser.map((user: any) => (
         <div
           key={user.id}
           className={styles.item}
           onClick={() => {
-            handleNewConversation(user.id)
             onUserClick(user.id)}}
         >
           <img src="/avatar2.jpg" className={styles.avatar} alt="avatar" />
@@ -117,7 +112,9 @@ const ChatList = ( {onUserClick}: ChatListProps) => {
         <p>You don't have any conversations yet</p>
       )}
     </div>
-  );
+    
+    </>);
+
 };
 
 export default ChatList;
