@@ -3,8 +3,8 @@
     border-right: 1px dotted white;
     border-left: 1px dotted white;
     border-bottom: 1px dotted white;
-    min-width: 250px;
-    max-width: 25vw;
+    min-width: 280px;
+    max-width: 28vw;
     height: calc(100% - 76px);
     flex-wrap: wrap;
     overflow: auto;
@@ -41,8 +41,8 @@
     display: flex;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
-    min-width: 250px;
-    max-width: 25vw;
+    min-width: 280px;
+    max-width: 28vw;
     background-color: #1c1c1c;
     border-radius: 10px;
     transition: background-color 0.3s ease-in-out;

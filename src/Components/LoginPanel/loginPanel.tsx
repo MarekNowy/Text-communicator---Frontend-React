@@ -31,8 +31,7 @@ function LoginPanel() {
 
             localStorage.setItem('access_token', access_token);
             localStorage.setItem('refresh_token', refresh_token);
-
-            createSocket(access_token);
+//get socket
             setSuccess(true);
           
             
@@ -58,6 +57,8 @@ function LoginPanel() {
     
     useEffect(() => {
         if(success){
+        const token = localStorage.getItem('access_token')
+        createSocket(token as string);
         navigate("/home")
         }
     }, [success])

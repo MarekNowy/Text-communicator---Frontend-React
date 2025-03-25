@@ -36,7 +36,7 @@ const UserInfo = () => {
     }
   }, [JWT_TOKEN]);
 
-  const handleLogOut = async () => {
+ const handleLogOut = async () => {
     try {
       console.log("log out")
     const response = await axios.get("http://localhost:3000/auth/logout", {
@@ -54,7 +54,7 @@ const UserInfo = () => {
   }
     return(
         <div className={styles.userinfo}>
-        <img src="/avatar2.jpg" alt="" className={styles.avatar}/>
+        <img onClick={() => {setSettings(false)}} src="/avatar2.jpg" alt="" className={styles.avatar}/>
         <h2>{user?.nickName}</h2>
         <div className={styles.icons}>
         <i className="icon-cog" onClick={goToSettings}/>

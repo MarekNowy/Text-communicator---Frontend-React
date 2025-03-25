@@ -28,7 +28,8 @@ const Chat = ({ userId }: { userId: any }) => {
             Authorization: `Bearer ${JWT_TOKEN}`,
           },
         });
-        setMessages(response.data);
+        console.log(response.data)
+       setMessages(response.data);
       } catch (err) {
         console.log("Error: " + err);
       }
@@ -88,7 +89,8 @@ const Chat = ({ userId }: { userId: any }) => {
   }
   return (
     <div className={styles.chat}>
-      {typeof messages[messages.length-1] === "string" ?
+      {
+      typeof messages[messages.length-1] === "string" ?
       <div className={styles.user}>
         <img src="/avatar2.jpg" alt="" className={styles.avatar}/>
         <div className={styles.usernickname}>
@@ -121,7 +123,7 @@ const Chat = ({ userId }: { userId: any }) => {
             }
           })}
           <div ref={messagesEndRef}></div>
-        </div>
+        </div> 
         <div className={styles.tosend}>
           <textarea onChange={(e) => setText(e.target.value)} value={text}></textarea>
           <button onClick={handleSendMessage}><div className={styles.envelope}>📨</div></button>
