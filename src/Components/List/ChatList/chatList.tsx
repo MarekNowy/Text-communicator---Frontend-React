@@ -5,6 +5,7 @@ import { getSocket } from "../../Context/socket";
 import { createContext } from "react";
 import UserInfo from "../UserInfo/userInfo";
 import Settings from "../../Settings/settings";
+import Stats from "../../Stats/stats"
 
 
 interface ChatListProps {
@@ -15,10 +16,12 @@ export const ValueContext = createContext<any>("")
 
 const ChatList = ( {onUserClick}: ChatListProps) => {
   const [settings, setSettings] = useState<boolean>(false);
+  const [stats, setStats] = useState<boolean>(false);
   const [users, setUsers] = useState<any>([]);
   const JWT_TOKEN = localStorage.getItem("access_token");
   const [searchUser, setSearchUser] = useState<any>([]);
   const socket = getSocket();
+
   
   useEffect(() => {
     const fetchPartnerData = async () => {
@@ -59,7 +62,10 @@ const ChatList = ( {onUserClick}: ChatListProps) => {
 
   return (<>
 
-    <ValueContext.Provider value={[settings, setSettings]}>
+    <ValueContext.Provider value={{
+      settings: [settings,setSettings],
+      stats: [stats, setStats]
+    }}>
       <UserInfo/>
     </ValueContext.Provider>
     
@@ -78,7 +84,7 @@ const ChatList = ( {onUserClick}: ChatListProps) => {
       
       { settings ? (
         <Settings/>
-      ) :
+      ) : stats ? (<Stats/>) :
       searchUser.length > 0 ? ( searchUser.map((user: any) => (
         <div
           key={user.id}

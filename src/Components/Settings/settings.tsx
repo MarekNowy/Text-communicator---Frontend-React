@@ -1,6 +1,7 @@
 import axios from 'axios';
 import styles from './settings.module.css'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Settings = () => {
 
@@ -10,6 +11,8 @@ const [wantToRemove, setWantToRemove] = useState<boolean>(false);
 const [nickName, setNickName] = useState<string>("")
 const [email, setEmail] = useState<string>("")
 const [password, setPassword] = useState<string>("")
+
+const navigate = useNavigate()
 
 const handleNickChange = async () => {
   const response = await axios.patch('http://localhost:3000/users', 
@@ -33,7 +36,9 @@ const handleAccountRemove = async () => {
         password: password,
       },
     });
-    console.log('Account removed successfully', response);
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    navigate('/login')
   } catch (error) {
     console.error('Error removing account', error);
   }
@@ -59,7 +64,7 @@ wantToChange ? (
   />
  <button 
  className={styles.saveNick} 
- onClick={handleNickChange}>
+ onClick={() => {handleNickChange(); window.location.reload();}}>
   Save
   </button>
 </div>

@@ -8,38 +8,51 @@ const Chat = ({ userId }: { userId: any }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const [text, setText] = useState('');
+  const [page, setPage] = useState<number>();
+  const [messagesScrollPercentage, setMessagesScrollPercentage] = useState<number>()
   
   const JWT_TOKEN = localStorage.getItem("access_token");
   
   useEffect(() => {
+    if(messagesScrollPercentage as number > 70) {
     if (messagesEndRef.current) {
         messagesEndRef.current.scrollIntoView(
         { behavior: "smooth", block: "end" }
       )
-    }
+    }};
   }, [messages]); 
 
   useEffect(() => {
     const fetchUserData = async () => {
+      console.log(userId)
       try {
         if(!userId){return};
-        const response = await axios.get(`http://localhost:3000/messages/interlocutors/${userId}`, {
+        const response = await axios.get(`http://localhost:3000/messages/interlocutors/${userId}/${page}`, {
           headers: {
             Authorization: `Bearer ${JWT_TOKEN}`,
           },
         });
-        console.log(response.data)
-       setMessages(response.data);
+      if(response.data.length > 1){
+      if(typeof messages[messages.length-1] == 'string'){
+        setMessages(messages.pop())   
+      }
+      setMessages([messages, ...response.data].flat());
+    }
       } catch (err) {
         console.log("Error: " + err);
       }
     };
     fetchUserData();
-  }, [userId]);
+  }, [page,userId]);
+
+  useEffect(() => {
+  setMessages([]);
+  setPage(0);
+  },[userId])
 
   useEffect(() => {
     console.log('efekt startuje', socket);
-    const handleMessage = (data: any) => {
+    const handleMessage = (data: any) => { 
       setMessages((prevMessages) => [data, ...prevMessages]);
     };
     socket.on('message', handleMessage);
@@ -58,10 +71,7 @@ const Chat = ({ userId }: { userId: any }) => {
         Authorization: `Bearer ${JWT_TOKEN}`,
       },  
     })
-    console.log("befor emit");
     socket.emit('message', {toUserId: userId, message: text});
-    console.log("after emit");
-    
     setText('');
     
   } catch (error){
@@ -69,6 +79,7 @@ const Chat = ({ userId }: { userId: any }) => {
   }} 
  
   const handleSentTime = (time:string) => {
+  
   const sendTime:any = new Date(time);
   const now:any = new Date();
   const timeDiffrence:any = now - sendTime;
@@ -76,7 +87,7 @@ const Chat = ({ userId }: { userId: any }) => {
   if(days == 0 ){
     
   const hours = sendTime.getHours().toString().padStart(2,"0");
-  const minutes = sendTime.getHours().toString().padStart(2,"0");
+  const minutes = sendTime.getMinutes().toString().padStart(2,"0");
   const formatedData = `${hours}:${minutes}`;
   return formatedData;
 
@@ -86,7 +97,22 @@ const Chat = ({ userId }: { userId: any }) => {
     const formattedData = `${day}.${month}`;
     return formattedData;
   }
-  }
+}
+useEffect(() => {
+ const content: any = document.getElementById('content')
+ content.addEventListener('scroll', function(){
+  const scrollPosition = content.scrollTop;
+  const scrollTop = content.scrollTop;
+  const scrollHeight = content.scrollHeight;
+  const clientHeight = content.clientHeight;
+
+  const percentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
+  setMessagesScrollPercentage(percentage)
+  
+  if (scrollPosition == 0) {
+    setPage(page as number + 1)
+ }})})
+
   return (
     <div className={styles.chat}>
       {
@@ -103,7 +129,7 @@ const Chat = ({ userId }: { userId: any }) => {
         </div>
       </div>}
       <div className={styles.messages}>
-        <div className={styles.content}>
+        <div className={styles.content} id="content">
           {messages.slice(0, messages.length - 1).reverse().map((message: any) => {
             const data = handleSentTime(message.sentAt)
             if (message.senderId === userId) {
@@ -113,7 +139,7 @@ const Chat = ({ userId }: { userId: any }) => {
                   <p>{data}</p>
                 </div>
               );
-            } else {
+            } else if(message.receiverId === userId) {
               return (
                 <div key={message.id} className={styles.send}>
                   {message.content}  
@@ -132,4 +158,5 @@ const Chat = ({ userId }: { userId: any }) => {
     </div>
   );
 };
+
 export default Chat;

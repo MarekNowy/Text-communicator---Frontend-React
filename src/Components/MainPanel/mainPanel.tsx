@@ -9,7 +9,6 @@ const MainPanel = () => {
 
     const handleClick = (userId: string):void => {
     setUserId(userId)
-    console.log(userId)
     }
 
     return(<>

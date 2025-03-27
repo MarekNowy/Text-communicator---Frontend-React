@@ -12,10 +12,18 @@ const UserInfo = () => {
   const [user, setUser] = useState<any>(null);
   const JWT_TOKEN = localStorage.getItem("access_token");
  
-  const [settings, setSettings] = useContext(ValueContext)
+  const context = useContext(ValueContext);
+  const [settings, setSettings] = context.settings;
+  const [stats, setStats] = context.stats;
+
 
   const goToSettings = () => {
-    setSettings(true)
+    setStats(false);
+    setSettings(true);
+  }
+  const goToStats = () => {
+   setSettings(false);
+   setStats(true);
   }
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -36,7 +44,7 @@ const UserInfo = () => {
     }
   }, [JWT_TOKEN]);
 
- const handleLogOut = async () => {
+  const handleLogOut = async () => {
     try {
       console.log("log out")
     const response = await axios.get("http://localhost:3000/auth/logout", {
@@ -54,11 +62,11 @@ const UserInfo = () => {
   }
     return(
         <div className={styles.userinfo}>
-        <img onClick={() => {setSettings(false)}} src="/avatar2.jpg" alt="" className={styles.avatar}/>
+        <img onClick={() => {setSettings(false), setStats(false)}} src="/avatar2.jpg" alt="" className={styles.avatar}/>
         <h2>{user?.nickName}</h2>
         <div className={styles.icons}>
         <i className="icon-cog" onClick={goToSettings}/>
-        <i className="icon-article-alt"/>
+        <i className="icon-article-alt" onClick={goToStats}/>
         <i className="icon-login" onClick={handleLogOut}/>
         </div>
         </div>        
