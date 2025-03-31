@@ -1,130 +1,130 @@
 .chat {
-    flex: 2;
-    display: flex;
-    justify-content: flex-start;
-    border: 1px dotted white;
-    border-left: none;
-    border-top: none;
-    flex-direction: column;
+  flex: 2;
+  display: flex;
+  justify-content: flex-start;
+  border: 1px dotted white;
+  border-left: none;
+  border-top: none;
+  flex-direction: column;
 }
 
 .avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-    margin: 10px;
-    align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  margin: 10px;
+  align-items: center;
 }
 
 .user {
-    font-size: 30px;
-    display: flex;
-    border: 1px dotted white;
-    border-left: none;
-    min-width: 350px;
-    height: 75px;
+  font-size: 30px;
+  display: flex;
+  border: 1px dotted white;
+  border-left: none;
+  min-width: 350px;
+  height: 75px;
 }
 
 .content {
-    margin-top: 3px;
-    height: 75vh;
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
-    overflow-x: hidden;
-    
+  margin-top: 3px;
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .messages {
-    display: flex;
-    flex-direction: column;
-    max-height: calc(100% - 76px);
-    overflow-y: auto; 
-    overflow: hidden;
-    scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100% - 76px);
+  overflow-y: auto;
+  overflow: hidden;
+  scrollbar-width: none;
 }
 
 .send {
-    min-width: 50px;
-    padding: 5px;
-    color: black;
-    background-color: aqua;
-    font-size: 20px;
-    display: inline-block;
-    width: auto;
-    max-width: 80%;
-    border: 1px solid aqua;
-    border-radius: 10px;
-    align-self: flex-end;
-    margin-right: 3px;
-    margin-top: 5px;
-    word-wrap: break-word; 
-    overflow-wrap: break-word;
-    word-break: break-word; 
+  min-width: 50px;
+  padding: 5px;
+  color: black;
+  background-color: aqua;
+  font-size: 20px;
+  display: inline-block;
+  width: auto;
+  max-width: 80%;
+  border: 1px solid aqua;
+  border-radius: 10px;
+  align-self: flex-end;
+  margin-right: 3px;
+  margin-top: 5px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .received {
-    min-width: 50px;
-    margin-top: 5px;
-    font-size: 20px;
-    color: black;
-    background-color: lightgray;
-    display: inline-block;
-    padding: 5px;
-    border-radius: 10px;
-    width: auto;
-    max-width: 80%;
-    align-self: flex-start;
-    margin-left: 3px;
-    word-wrap: break-word; 
-    overflow-wrap: break-word; 
-    word-break: break-word; 
+  min-width: 50px;
+  margin-top: 5px;
+  font-size: 20px;
+  color: black;
+  background-color: lightgray;
+  display: inline-block;
+  padding: 5px;
+  border-radius: 10px;
+  width: auto;
+  max-width: 80%;
+  align-self: flex-start;
+  margin-left: 3px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 textarea {
-    max-height: 15px;
-    min-width: 80%;
-    justify-content: center;
-    margin: 6px;     
-    background-color: #2B2B2B ;
-    box-shadow: 0px 0px 10px -1px rgba(0,255,255,0.51);
-    color: #00ffff;
-    border-radius: 5px;
-    max-width: 400px;
-    resize: vertical;
+  max-height: 15px;
+  min-width: 70%;
+  max-width: 80%;
+  justify-content: center;
+  margin: 6px;
+  background-color: #2b2b2b;
+  box-shadow: 0px 0px 10px -1px rgba(0, 255, 255, 0.51);
+  color: #00ffff;
+  border-radius: 5px;
+  max-width: 400px;
+  resize: vertical;
 }
 
 textarea:focus {
-    transform: translateY(-100%);
+  transform: translateY(-100%);
 }
 
 .tosend {
-    max-height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  max-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tosend button {
-    width: 50px;
-    height: 25px;
-    background-color: aqua;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    outline: none;
+  width: 50px;
+  height: 25px;
+  background-color: aqua;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
 }
 
 p {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .usernickname {
-    align-items: center;
-    margin-top: 10px;
-    margin-left: 10px;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .envelope {
-    margin-bottom: 7px;
+  margin-bottom: 7px;
 }

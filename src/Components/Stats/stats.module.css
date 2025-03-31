@@ -1,11 +1,10 @@
-.statsContent{
- text-align: left;
- margin-left: 10px;
- padding-top: 20px;
+.statsContent {
+  text-align: left;
+  margin-left: 10px;
+  padding-top: 20px;
 }
-.odd{
-
+.odd {
 }
-.even{
-    background-color: #1D1D1D;
+.even {
+  background-color: #1d1d1d;
 }

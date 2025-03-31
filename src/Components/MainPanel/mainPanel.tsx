@@ -1,22 +1,23 @@
-import styles from "./mainPanel.module.css"
+import styles from "./mainPanel.module.css";
 import List from "../List/list";
 import Chat from "../Chat/chat";
 import Detail from "../Detail/detail";
 import { useState } from "react";
 const MainPanel = () => {
+  const [userId, setUserId] = useState<string>("");
 
-    const [userId, setUserId]= useState<string>("")
+  const handleClick = (userId: string): void => {
+    setUserId(userId);
+  };
 
-    const handleClick = (userId: string):void => {
-    setUserId(userId)
-    }
-
-    return(<>
-    <div className={styles.box}>
-        <List onUserClick={handleClick}/>
-        <Chat userId = {userId}/>
-        <Detail/>
-    </div>
-    </>)
-}
+  return (
+    <>
+      <div className={styles.box}>
+        <List onUserClick={handleClick} />
+        <Chat userId={userId} />
+        <Detail />
+      </div>
+    </>
+  );
+};
 export default MainPanel;
