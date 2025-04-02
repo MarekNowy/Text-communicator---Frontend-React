@@ -41,7 +41,7 @@ export function SignUpPanel() {
           nickName: nickName,
           email: email,
           password: password,
-        },
+        }
       );
       console.log(response);
     } catch (err: any) {

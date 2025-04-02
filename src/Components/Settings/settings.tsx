@@ -23,7 +23,7 @@ const Settings = () => {
         headers: {
           Authorization: `Bearer ${JWT}`,
         },
-      },
+      }
     );
   };
 

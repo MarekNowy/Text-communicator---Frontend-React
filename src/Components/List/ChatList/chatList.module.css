@@ -89,3 +89,10 @@
   background: black;
   border-radius: 10px;
 }
+.unread {
+  background-color: #00ffff;
+  color: black;
+}
+.unread p {
+  color: black;
+}

@@ -2,6 +2,7 @@ import axios from "axios";
 import styles from "./chat.module.css";
 import { useEffect, useState, useRef } from "react";
 import { getSocket } from "../Context/socket";
+import { jwtDecode } from "jwt-decode";
 
 const Chat = ({ userId }: { userId: any }) => {
   const socket = getSocket();
@@ -13,6 +14,15 @@ const Chat = ({ userId }: { userId: any }) => {
     useState<number>();
 
   const JWT_TOKEN = localStorage.getItem("access_token");
+  const myId = jwtDecode(JWT_TOKEN as string)["sub"];
+
+  const filterNewMessages = (
+    responseMessages: any[],
+    currentMessages: any[]
+  ) => {
+    const currentMessageIds = new Set(currentMessages.map((msg) => msg.id));
+    return responseMessages.filter((msg) => !currentMessageIds.has(msg.id));
+  };
 
   useEffect(() => {
     if ((messagesScrollPercentage as number) > 70) {
@@ -32,15 +42,15 @@ const Chat = ({ userId }: { userId: any }) => {
 
     const fetchUserData = async () => {
       try {
-        setPage(0);
         setMessages([]);
+        setPage(0);
         const response = await axios.get(
           `http://localhost:3000/messages/interlocutors/${userId}/0`,
           {
             headers: {
               Authorization: `Bearer ${JWT_TOKEN}`,
             },
-          },
+          }
         );
         setMessages(response.data);
       } catch (error) {
@@ -62,19 +72,24 @@ const Chat = ({ userId }: { userId: any }) => {
             headers: {
               Authorization: `Bearer ${JWT_TOKEN}`,
             },
-          },
+          }
         );
-
-        setMessages((prevMessages) => [...prevMessages, ...response.data]);
-      } catch (error) {}
+        if (filterNewMessages(response.data, messages)) {
+          setMessages((prevMessages) => [...prevMessages, ...response.data]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
     if (page > 0) {
       nextPage();
     }
   }, [page]);
 
+  // when you send a message to yourself you getting it twice i belief
   useEffect(() => {
     const handleMessage = (data: any) => {
+      console.log("add");
       setMessages((prevMessages) => [data, ...prevMessages]);
     };
     socket.on("message", handleMessage);
@@ -95,9 +110,13 @@ const Chat = ({ userId }: { userId: any }) => {
           headers: {
             Authorization: `Bearer ${JWT_TOKEN}`,
           },
-        },
+        }
       );
-      socket.emit("message", { toUserId: userId, message: text });
+      socket.emit("message", {
+        toUserId: userId,
+        message: text,
+        fromToken: JWT_TOKEN,
+      });
       setText("");
     } catch (error) {
       console.log(error);
