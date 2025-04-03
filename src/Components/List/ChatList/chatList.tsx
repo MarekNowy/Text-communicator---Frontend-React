@@ -6,6 +6,7 @@ import UserInfo from "../UserInfo/userInfo";
 import Settings from "../../Settings/settings";
 import Stats from "../../Stats/stats";
 import { jwtDecode } from "jwt-decode";
+import { data } from "react-router-dom";
 
 interface ChatListProps {
   onUserClick: (userId: string) => void;
@@ -18,6 +19,7 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
   const [stats, setStats] = useState<boolean>(false);
   const [users, setUsers] = useState<any>([]);
   const [searchUser, setSearchUser] = useState<any>([]);
+  //const [partnerNickName, setPartnerNickName] = useState<string>("");
   const JWT_TOKEN = localStorage.getItem("access_token");
   const socket = getSocket();
 
@@ -48,71 +50,98 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
   useEffect(() => {
     const decode: any = jwtDecode(JWT_TOKEN as string);
     const myId = decode["sub"];
+    const myNickName = decode["username"];
     const handleNewMessage = (data: any) => {
-      if (data.senderId !== data.receiverId) {
-        console.log(data);
-        setUsers((prevUsers: any[]) => {
-          const updatedUsers = [...prevUsers];
-          const userIndex = updatedUsers.findIndex(
-            (user) =>
-              user.partnerId === data.senderId ||
-              user.partnerId === data.receiverId
+      console.log(data);
+      setUsers((prevUsers: any[]) => {
+        const updatedUsers = [...prevUsers];
+        let userIndex = null;
+        if (data.senderId == myId && data.receiverId != myId) {
+          userIndex = updatedUsers.findIndex(
+            (user) => user.partnerId == data.receiverId
           );
-          if (
-            // user on list who are receiver
-            userIndex !== -1 &&
-            updatedUsers[userIndex].partnerId == data.receiverId
-          ) {
-            updatedUsers[userIndex] = {
-              ...updatedUsers[userIndex],
-              content: data.content,
-              unread: false,
-            };
-          } else if (
-            // user on list who are sender and send message to me
-            userIndex !== -1 &&
-            updatedUsers[userIndex].partnerId == data.senderId &&
-            updatedUsers[userIndex].partnerId != myId
-          ) {
-            console.log(data);
-            updatedUsers[userIndex] = {
-              ...updatedUsers[userIndex],
-              content: data.content,
-              unread: true,
-            };
-          } else if (
-            userIndex !== -1 && // from me to me when im in the list
-            updatedUsers[userIndex].partnerId == myId &&
-            data.senderId == myId &&
-            data.receiverId == myId
-          ) {
-            console.log("me to me", data);
-            updatedUsers[userIndex] = {
-              ...updatedUsers[userIndex],
-              content: data.content,
-              unread: false,
-            };
-          } else if (
-            userIndex === -1 && // message from me to me when i am not in the list
-            data.senderId == myId &&
-            data.receiverId == myId
-          ) {
-          } else if (
-            userIndex === -1 && // message to me from someone who is not in the list
-            data.senderId !== myId &&
-            data.receiverId == myId
-          ) {
-            updatedUsers.push({
-              partnerId: data.senderId,
-              partnerNickName: data.senderNickName,
-              content: data.content,
-              unread: true,
-            });
-          }
+        } else if (data.senderId != myId && data.receiverId == myId) {
+          userIndex = updatedUsers.findIndex(
+            (user) => user.partnerId == data.senderId
+          );
+        } else {
+          userIndex = updatedUsers.findIndex((user) => user.partnerId == myId);
+        }
 
-          return updatedUsers;
-        });
-      }
+        if (
+          userIndex !== -1 &&
+          updatedUsers[userIndex].partnerId == data.receiverId &&
+          updatedUsers[userIndex].partnerId != myId
+        ) {
+          console.log("case 1");
+          updatedUsers[userIndex] = {
+            ...updatedUsers[userIndex],
+            content: data.content,
+            unread: false,
+          };
+        } else if (
+          userIndex !== -1 &&
+          updatedUsers[userIndex].partnerId == data.senderId &&
+          updatedUsers[userIndex].partnerId != myId
+        ) {
+          console.log("case 2");
+          updatedUsers[userIndex] = {
+            ...updatedUsers[userIndex],
+            content: data.content,
+            unread: true,
+          };
+        } else if (
+          userIndex !== -1 &&
+          updatedUsers[userIndex].partnerId == myId &&
+          data.senderId == myId &&
+          data.receiverId == myId
+        ) {
+          console.log("case 3");
+          updatedUsers[userIndex] = {
+            ...updatedUsers[userIndex],
+            content: data.content,
+            unread: false,
+          };
+        } else if (
+          userIndex === -1 &&
+          data.senderId == myId &&
+          data.receiverId == myId
+        ) {
+          console.log("case 4");
+          updatedUsers.push({
+            partnerId: data.senderId,
+            partnerNickName: data.fromUser,
+            content: data.content,
+            unread: false,
+          });
+        } else if (
+          userIndex === -1 &&
+          data.senderId != myId &&
+          data.receiverId == myId
+        ) {
+          console.log("case 5");
+          updatedUsers.push({
+            partnerId: data.senderId,
+            partnerNickName: data.fromUser,
+            content: data.content,
+            unread: true,
+          });
+        } else if (
+          userIndex === -1 &&
+          data.senderId == myId &&
+          data.receiverId != myId
+        ) {
+          console.log("case 6");
+          updatedUsers.push({
+            partnerId: data.receiverId,
+            partnerNickName: data.toUser,
+            content: data.content,
+            unread: false,
+          });
+        }
+
+        return updatedUsers;
+      });
     };
 
     socket.on("message", handleNewMessage);
@@ -189,6 +218,7 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
               key={user.id}
               className={styles.item}
               onClick={() => {
+                //  setPartnerNickName(user.nickName);
                 handleUserClick(user.id);
               }}
             >
@@ -204,6 +234,7 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
               key={user.id}
               className={`${styles.item} ${user.unread ? styles.unread : ""}`}
               onClick={() => {
+                //  setPartnerNickName(user.partnerNickName);
                 handleUserClick(user.partnerId);
               }}
             >

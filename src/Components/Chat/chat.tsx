@@ -86,10 +86,8 @@ const Chat = ({ userId }: { userId: any }) => {
     }
   }, [page]);
 
-  // when you send a message to yourself you getting it twice i belief
   useEffect(() => {
     const handleMessage = (data: any) => {
-      console.log("add");
       setMessages((prevMessages) => [data, ...prevMessages]);
     };
     socket.on("message", handleMessage);
@@ -116,6 +114,7 @@ const Chat = ({ userId }: { userId: any }) => {
         toUserId: userId,
         message: text,
         fromToken: JWT_TOKEN,
+        toUser: messages[messages.length - 1],
       });
       setText("");
     } catch (error) {

@@ -14,8 +14,9 @@ const Stats = () => {
           headers: {
             Authorization: `Bearer ${JWT_TOKEN}`,
           },
-        },
+        }
       );
+      console.log(response);
       setStatsData(response.data);
     };
     fetchStats();
@@ -28,9 +29,10 @@ const Stats = () => {
         className={styles.odd}
       >{`sent messages: ${statsData?.howManyMessages}`}</div>
       <div className={styles.even}>{`id: ${statsData?.id}`}</div>
-      <div
-        className={styles.odd}
-      >{`register at: ${statsData?.registerAt} `}</div>
+      <div className={styles.odd}>{`register at: ${statsData?.registerAt.slice(
+        0,
+        10
+      )} `}</div>
     </div>
   );
 };
