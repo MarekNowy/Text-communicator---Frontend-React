@@ -23,6 +23,12 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
   const JWT_TOKEN = localStorage.getItem("access_token");
   const socket = getSocket();
 
+  const checkIfExist = (arr: any[], arr2: any[]) => {
+    return arr.some((item) => {
+      item.id === arr2.some((item2) => item2.id);
+    });
+  };
+
   useEffect(() => {
     const fetchPartnerData = async () => {
       try {
@@ -167,6 +173,9 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
         },
       }
     );
+    if (checkIfExist(users, response.data)) {
+      return;
+    }
     setSearchUser(response.data);
   };
 
