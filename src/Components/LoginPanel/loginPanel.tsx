@@ -6,7 +6,6 @@ import { createSocket } from "../Context/socket";
 
 function LoginPanel() {
   const navigate = useNavigate();
-
   const userRef = useRef<HTMLInputElement | null>(null);
   const errRef = useRef<HTMLParagraphElement | null>(null);
 
@@ -34,11 +33,12 @@ function LoginPanel() {
 
       setSuccess(true);
     } catch (err: any) {
+      const status = err.response.status;
       if (!err.response) {
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 401) {
+      } else if (status === 401) {
         setErrMsg("Invalid Login Data");
-      } else if (err.response.status === 404) {
+      } else if (status === 404) {
         setErrMsg("Cannot find the user");
       } else {
         setErrMsg("Login Failed");

@@ -4,8 +4,9 @@ import axios from "axios";
 
 const Stats = () => {
   const [statsData, setStatsData] = useState<any>(null);
+  const token = "access_token";
 
-  const JWT_TOKEN = localStorage.getItem("access_token");
+  const JWT_TOKEN = localStorage.getItem(token);
   useEffect(() => {
     const fetchStats = async () => {
       const response: any = await axios.get(
@@ -16,7 +17,6 @@ const Stats = () => {
           },
         }
       );
-      console.log(response);
       setStatsData(response.data);
     };
     fetchStats();

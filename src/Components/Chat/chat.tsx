@@ -12,6 +12,7 @@ const Chat = ({ userId }: { userId: any }) => {
   const [page, setPage] = useState<number>(0);
   const [messagesScrollPercentage, setMessagesScrollPercentage] =
     useState<number>();
+  const [changed, setChanged] = useState(false);
 
   const JWT_TOKEN = localStorage.getItem("access_token");
   const myId = jwtDecode(JWT_TOKEN as string)["sub"];
@@ -36,6 +37,16 @@ const Chat = ({ userId }: { userId: any }) => {
   }, [messages]);
 
   useEffect(() => {
+    if (changed) {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: "instant",
+        block: "end",
+      });
+      setChanged(false);
+    }
+  }, [messages]);
+
+  useEffect(() => {
     if (typeof userId !== "string" || !userId) {
       return;
     }
@@ -52,6 +63,7 @@ const Chat = ({ userId }: { userId: any }) => {
             },
           }
         );
+        setChanged(true);
         setMessages(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);

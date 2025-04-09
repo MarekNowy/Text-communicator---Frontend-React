@@ -6,7 +6,6 @@ import UserInfo from "../UserInfo/userInfo";
 import Settings from "../../Settings/settings";
 import Stats from "../../Stats/stats";
 import { jwtDecode } from "jwt-decode";
-import { data } from "react-router-dom";
 
 interface ChatListProps {
   onUserClick: (userId: string) => void;
@@ -19,7 +18,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
   const [stats, setStats] = useState<boolean>(false);
   const [users, setUsers] = useState<any>([]);
   const [searchUser, setSearchUser] = useState<any>([]);
-  //const [partnerNickName, setPartnerNickName] = useState<string>("");
   const JWT_TOKEN = localStorage.getItem("access_token");
   const socket = getSocket();
 
@@ -42,7 +40,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           unread: false,
         }));
         setUsers(usersWithUnread);
-        console.log("users", usersWithUnread);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
@@ -58,7 +55,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
     const myId = decode["sub"];
     const myNickName = decode["username"];
     const handleNewMessage = (data: any) => {
-      console.log(data);
       setUsers((prevUsers: any[]) => {
         const updatedUsers = [...prevUsers];
         let userIndex = null;
@@ -79,7 +75,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           updatedUsers[userIndex].partnerId == data.receiverId &&
           updatedUsers[userIndex].partnerId != myId
         ) {
-          console.log("case 1");
           updatedUsers[userIndex] = {
             ...updatedUsers[userIndex],
             content: data.content,
@@ -90,7 +85,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           updatedUsers[userIndex].partnerId == data.senderId &&
           updatedUsers[userIndex].partnerId != myId
         ) {
-          console.log("case 2");
           updatedUsers[userIndex] = {
             ...updatedUsers[userIndex],
             content: data.content,
@@ -102,7 +96,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           data.senderId == myId &&
           data.receiverId == myId
         ) {
-          console.log("case 3");
           updatedUsers[userIndex] = {
             ...updatedUsers[userIndex],
             content: data.content,
@@ -113,7 +106,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           data.senderId == myId &&
           data.receiverId == myId
         ) {
-          console.log("case 4");
           updatedUsers.push({
             partnerId: data.senderId,
             partnerNickName: data.fromUser,
@@ -125,7 +117,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           data.senderId != myId &&
           data.receiverId == myId
         ) {
-          console.log("case 5");
           updatedUsers.push({
             partnerId: data.senderId,
             partnerNickName: data.fromUser,
@@ -137,7 +128,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           data.senderId == myId &&
           data.receiverId != myId
         ) {
-          console.log("case 6");
           updatedUsers.push({
             partnerId: data.receiverId,
             partnerNickName: data.toUser,
@@ -227,7 +217,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
               key={user.id}
               className={styles.item}
               onClick={() => {
-                //  setPartnerNickName(user.nickName);
                 handleUserClick(user.id);
               }}
             >
@@ -243,7 +232,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
               key={user.id}
               className={`${styles.item} ${user.unread ? styles.unread : ""}`}
               onClick={() => {
-                //  setPartnerNickName(user.partnerNickName);
                 handleUserClick(user.partnerId);
               }}
             >

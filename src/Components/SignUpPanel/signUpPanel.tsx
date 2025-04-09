@@ -43,13 +43,13 @@ export function SignUpPanel() {
           password: password,
         }
       );
-      console.log(response);
     } catch (err: any) {
+      const status = err.response.status;
       if (!err.response) {
         setErr("No server response");
-      } else if (err.response.status === 400) {
+      } else if (status === 400) {
         setErr("Invalid login data");
-      } else if (err.response.status === 409) {
+      } else if (status === 409) {
         setErr("User already exists");
       }
     }
