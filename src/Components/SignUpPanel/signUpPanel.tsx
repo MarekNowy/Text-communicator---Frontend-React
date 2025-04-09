@@ -1,21 +1,20 @@
 import styles from "./signUpPanel.module.css";
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function SignUpPanel() {
   const [nickName, setNickName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
+  const navigate = useNavigate();
 
   const userRef = useRef<HTMLInputElement | null>(null);
   const errRef = useRef<HTMLParagraphElement | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setNickName("");
-    setEmail("");
-    setPassword("");
 
     if (nickName.length < 4) {
       setErr("NickName must be longer than 4 marks");
@@ -43,6 +42,10 @@ export function SignUpPanel() {
           password: password,
         }
       );
+      setNickName("");
+      setEmail("");
+      setPassword("");
+      navigate("/login");
     } catch (err: any) {
       const status = err.response.status;
       if (!err.response) {

@@ -104,7 +104,6 @@ const Chat = ({ userId }: { userId: any }) => {
         (data.senderId === userId || data.senderId === myId) &&
         (data.receiverId === userId || data.receiverId === myId)
       ) {
-        console.log(data);
         setMessages((prevMessages) => [data, ...prevMessages]);
       }
     };
@@ -112,7 +111,7 @@ const Chat = ({ userId }: { userId: any }) => {
     return () => {
       socket.off("message", handleMessage);
     };
-  }, [socket]);
+  }, [socket, userId, myId]);
 
   const handleSendMessage = async () => {
     try {

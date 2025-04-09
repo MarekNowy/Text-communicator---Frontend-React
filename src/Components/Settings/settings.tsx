@@ -2,6 +2,8 @@ import axios from "axios";
 import styles from "./settings.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getSocket } from "../Context/socket";
+import { jwtDecode } from "jwt-decode";
 
 const Settings = () => {
   const JWT: string | null = localStorage.getItem("access_token");
@@ -10,8 +12,10 @@ const Settings = () => {
   const [nickName, setNickName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const socket = getSocket();
 
   const navigate = useNavigate();
+  const myId = jwtDecode(JWT as string)["sub"];
 
   const handleNickChange = async () => {
     const response = await axios.patch(
@@ -41,6 +45,7 @@ const Settings = () => {
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       navigate("/login");
+      socket.emit("removeAccount", { accountId: myId });
     } catch (error) {
       console.error("Error removing account", error);
     }

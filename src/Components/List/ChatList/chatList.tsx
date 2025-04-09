@@ -107,9 +107,13 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           data.receiverId == myId
         ) {
           updatedUsers.push({
+            id: data.id,
+            receiverId: data.receiverId,
+            senderId: data.senderId,
             partnerId: data.senderId,
             partnerNickName: data.fromUser,
             content: data.content,
+            sentAt: new Date(),
             unread: false,
           });
         } else if (
@@ -118,9 +122,13 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           data.receiverId == myId
         ) {
           updatedUsers.push({
+            id: data.id,
+            receiverId: data.receiverId,
+            senderId: data.senderId,
             partnerId: data.senderId,
             partnerNickName: data.fromUser,
             content: data.content,
+            sentAt: new Date(),
             unread: true,
           });
         } else if (
@@ -129,9 +137,13 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           data.receiverId != myId
         ) {
           updatedUsers.push({
-            partnerId: data.receiverId,
-            partnerNickName: data.toUser,
+            id: data.id,
+            receiverId: data.receiverId,
+            senderId: data.senderId,
+            partnerId: data.senderId,
+            partnerNickName: data.fromUser,
             content: data.content,
+            sentAt: new Date(),
             unread: false,
           });
         }
@@ -140,7 +152,21 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
       });
     };
 
+    const handleRemovedUser = (data: string) => {
+      setUsers((prevUsers: any[]) => {
+        const updatedUsers = [...prevUsers];
+        const userIndex = updatedUsers.findIndex(
+          (user) => user.partnerId == data
+        );
+        if (userIndex !== -1) {
+          updatedUsers.splice(userIndex, 1);
+        }
+        return updatedUsers;
+      });
+    };
+
     socket.on("message", handleNewMessage);
+    socket.on("removeAccount", handleRemovedUser);
 
     return () => {
       socket.off("message", handleNewMessage);
