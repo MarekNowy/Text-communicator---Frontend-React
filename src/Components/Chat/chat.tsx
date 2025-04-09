@@ -100,7 +100,13 @@ const Chat = ({ userId }: { userId: any }) => {
 
   useEffect(() => {
     const handleMessage = (data: any) => {
-      setMessages((prevMessages) => [data, ...prevMessages]);
+      if (
+        (data.senderId === userId || data.senderId === myId) &&
+        (data.receiverId === userId || data.receiverId === myId)
+      ) {
+        console.log(data);
+        setMessages((prevMessages) => [data, ...prevMessages]);
+      }
     };
     socket.on("message", handleMessage);
     return () => {
@@ -151,6 +157,7 @@ const Chat = ({ userId }: { userId: any }) => {
       return formattedData;
     }
   };
+
   useEffect(() => {
     const content: any = document.getElementById("content");
     content.addEventListener("scroll", function () {
