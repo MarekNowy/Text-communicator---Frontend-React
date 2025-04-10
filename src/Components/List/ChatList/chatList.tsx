@@ -49,7 +49,6 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
       fetchPartnerData();
     }
   }, [JWT_TOKEN]);
-
   useEffect(() => {
     const decode: any = jwtDecode(JWT_TOKEN as string);
     const myId = decode["sub"];
@@ -142,7 +141,7 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
             id: data.id,
             receiverId: data.receiverId,
             senderId: data.senderId,
-            partnerId: data.senderId,
+            partnerId: data.receiverId,
             partnerNickName: data.toUser,
             content: data.content,
             sentAt: new Date(),
