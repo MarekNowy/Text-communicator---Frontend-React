@@ -56,7 +56,7 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
     const myNickName = decode["username"];
     const handleNewMessage = (data: any) => {
       setUsers((prevUsers: any[]) => {
-        const updatedUsers = [...prevUsers];
+        let updatedUsers = [...prevUsers];
         let userIndex = null;
         if (data.senderId == myId && data.receiverId != myId) {
           userIndex = updatedUsers.findIndex(
@@ -106,22 +106,23 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
           data.senderId == myId &&
           data.receiverId == myId
         ) {
-          updatedUsers.push({
+          const user = {
             id: data.id,
             receiverId: data.receiverId,
             senderId: data.senderId,
             partnerId: data.senderId,
-            partnerNickName: data.fromUser,
+            partnerNickName: data.toUser,
             content: data.content,
             sentAt: new Date(),
             unread: false,
-          });
+          };
+          updatedUsers = [...updatedUsers, user];
         } else if (
           userIndex === -1 &&
           data.senderId != myId &&
           data.receiverId == myId
         ) {
-          updatedUsers.push({
+          const user = {
             id: data.id,
             receiverId: data.receiverId,
             senderId: data.senderId,
@@ -130,22 +131,24 @@ const ChatList = ({ onUserClick }: ChatListProps) => {
             content: data.content,
             sentAt: new Date(),
             unread: true,
-          });
+          };
+          updatedUsers = [...updatedUsers, user];
         } else if (
           userIndex === -1 &&
           data.senderId == myId &&
           data.receiverId != myId
         ) {
-          updatedUsers.push({
+          const user = {
             id: data.id,
             receiverId: data.receiverId,
             senderId: data.senderId,
             partnerId: data.senderId,
-            partnerNickName: data.fromUser,
+            partnerNickName: data.toUser,
             content: data.content,
             sentAt: new Date(),
             unread: false,
-          });
+          };
+          updatedUsers = [...updatedUsers, user];
         }
 
         return updatedUsers;

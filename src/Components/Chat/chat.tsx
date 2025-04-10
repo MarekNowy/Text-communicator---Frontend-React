@@ -107,7 +107,16 @@ const Chat = ({ userId }: { userId: any }) => {
         setMessages((prevMessages) => [data, ...prevMessages]);
       }
     };
+    const handleAccountRemove = (data: any) => {
+      if (userId == data) {
+        setMessages([]);
+        setPage(0);
+        userId = null;
+      }
+    };
+
     socket.on("message", handleMessage);
+    socket.on("removeAccount", handleAccountRemove);
     return () => {
       socket.off("message", handleMessage);
     };
