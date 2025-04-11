@@ -1,12 +1,14 @@
-import styles from "./list.module.css"
-import ChatList from "./ChatList/chatList"
-import UserInfo from "./UserInfo/userInfo"
-
-const List = () => {
-    return(<div className={styles.list}>
-    <UserInfo/>
-    <ChatList/>
-
-    </div>)
+import styles from "./list.module.css";
+import ChatList from "./ChatList/chatList";
+import UserInfo from "./UserInfo/userInfo";
+interface ListProps {
+  onUserClick: (userId: string) => void;
 }
-export default List
+const List = ({ onUserClick }: ListProps) => {
+  return (
+    <div className={styles.list}>
+      <ChatList onUserClick={onUserClick} />
+    </div>
+  );
+};
+export default List;

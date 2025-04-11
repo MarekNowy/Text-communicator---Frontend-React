@@ -1,28 +1,28 @@
 body {
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw; 
-    background-image: url("/kury.jpg");
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("/wengen.avif");
 }
 
-
 .box {
-    background-color: rgb(0, 0, 0);
-    opacity: 0.85;
-    width: 90vw;   
-    height: 90vh;  
-    box-shadow: 0px 0px 10px -1px rgba(0, 255, 255, 0.51);
-    -webkit-box-shadow: 0px 0px 10px -1px rgba(0, 255, 255, 0.51);
-    -moz-box-shadow: 0px 0px 10px -1px rgba(0, 255, 255, 0.51);
-    border-radius: 10px;
-    display: flex;
-    position: absolute;  
-    top: 50%;          
-    left: 50%;           
-    transform: translate(-50%, -50%); 
-    box-sizing: border-box;
-    backdrop-filter: blur(19px);
+  background-color: rgb(0, 0, 0);
+  opacity: 0.85;
+  width: 90vw;
+  height: 90vh;
+  min-width: 700px;
+  box-shadow: 0px 0px 10px -1px rgba(0, 255, 255, 0.51);
+  -webkit-box-shadow: 0px 0px 10px -1px rgba(0, 255, 255, 0.51);
+  -moz-box-shadow: 0px 0px 10px -1px rgba(0, 255, 255, 0.51);
+  border-radius: 10px;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  backdrop-filter: blur(19px);
 }
