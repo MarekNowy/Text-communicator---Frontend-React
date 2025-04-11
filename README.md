@@ -86,4 +86,6 @@ To start the application in development mode:
 npm run dev
 ```
 
-The app will be available on the default port
+The app will be available on the default port 
+
+🔐 Login page is accessible at: /login
