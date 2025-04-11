@@ -1,50 +1,89 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# 📬 Communicator – Frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The frontend of the **text communicator** built with **React** and **TypeScript**, utilizing **WebSockets** for real-time communication and storing **JWT tokens** in **localStorage**. The app dynamically renders messages and the user list, displays notifications for new messages, and manages state using **React hooks**.
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- ✅ **JWT Authentication** – JWT tokens stored in **localStorage** for authentication
+- 📡 **Real-time communication** – Communication with the backend via WebSockets
+- 📝 **Message rendering** – Dynamically rendering messages
+- 👥 **User list** – Displaying the list of users
+- 🔔 **Real-time notifications** – Notifications for new messages
+- 🖋️ **Fontello** – Using icons from Fontello for the interface
+- ⚛️ **React hooks** – Utilizing `useState`, `useEffect`, `useRef` for state management
+- 📦 **TypeScript** – Full support for static typing
+- 🏃 Project runs with `npm run dev`
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+## ⚙️ Installation
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/MarekNowy/Text-Comunicator---Frontend.git
+cd Text-Comunicator---Frontend
+
+# 2. Install dependencies
+npm install
+
+# 3. Run the project
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+The application will be available in your browser on the default port.
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
+---
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
+## 🛠️ LocalStorage and JWT Tokens
+
+JWT tokens are stored in **localStorage** to maintain the user session:
+
+- **Login/Registration**: After a successful login, the JWT token is saved in **localStorage**.
+- **Token retrieval**: For every request to the backend, the token is retrieved from **localStorage** and attached to the HTTP headers for authentication.
+  
+The token can be removed from **localStorage** when the user logs out.
+
+---
+
+## ⚛️ React Hooks
+
+The project fully utilizes **React hooks** for managing state and effects in the app:
+
+- `useState`: To manage the state of messages, users, and notifications.
+- `useEffect`: To listen for events (e.g., new messages) and perform actions when state changes.
+- `useRef`: To store references to DOM elements, e.g., for scrolling the message list.
+
+---
+
+## 🧩 WebSocket Communication
+
+The application uses **Socket.IO** for real-time communication with the backend. This allows messages and notifications to be displayed in real-time, without the need to refresh the page.
+
+---
+
+## 🖋️ Fontello Icons
+
+The application interface uses icons from **Fontello**. Icons are utilized in various parts of the app, such as buttons, notifications, and other UI elements.
+
+---
+
+## 📚 Future Enhancements
+
+- 🎥 **Video chat support**
+- 💬 **Group chat support**
+- 🖼️ **Image and media sharing**
+- 🗑️ **Message deletion functionality**
+
+---
+
+## 🏃 Running the Application
+
+To start the application in development mode:
+
+```bash
+npm run dev
 ```
+
+The app will be available on the default port
